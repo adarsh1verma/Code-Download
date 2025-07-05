@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Admin Panel: Upload Document</h2>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color:green;">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form action="/admin" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br>
+        <input type="text" name="code" placeholder="Optional: Enter Code"><br>
+        <button type="submit">Upload & Assign</button>
+    </form>
+
+    <h3>Existing Access Codes:</h3>
+    <ul>
+        {% for code, file in codes.items() %}
+            <li><strong>{{ code }}</strong> → {{ file }}</li>
+        {% endfor %}
+    </ul>
+    <p><a href="/">← Back to User Page</a> | <a href="/logout">Logout</a></p>
+</body>
+</html>
